@@ -1,0 +1,43 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "recipe-box",
+  "version": "1.0.0",
+  "description": "Your saved recipes, planned into meals.",
+  "author": {"name": "Recipe Box", "email": "support@recipebox.example", "url": "https://recipebox.example"},
+  "extensions": {"com.openai": {
+    "interface": {
+      "displayName": "Recipe Box",
+      "shortDescription": "Saved recipes and meal plans",
+      "longDescription": "Recipe Box keeps your saved recipes and plans a week of meals from them.",
+      "developerName": "Recipe Box",
+      "category": "Lifestyle",
+      "capabilities": ["Reads your saved recipes", "Plans a week of meals"],
+      "websiteURL": "https://recipebox.example",
+      "supportURL": "https://recipebox.example/help",
+      "privacyPolicyURL": "https://recipebox.example/privacy",
+      "termsOfServiceURL": "https://recipebox.example/terms",
+      "defaultPrompt": ["Plan my dinners this week."],
+      "brandColor": "#1B2A1B",
+      "brandColorDark": "#142014"
+    },
+    "review": {
+      "test_cases": {
+        "positive": [
+          {"description": "List recipes", "prompt": "What recipes have I saved?", "tools_triggered": ["list_recipes"], "expected_behavior": "Lists the saved recipes."},
+          {"description": "Plan a week", "prompt": "Plan my dinners this week.", "tools_triggered": ["list_recipes", "plan_meals"], "expected_behavior": "Plans seven dinners from saved recipes."},
+          {"description": "One recipe", "prompt": "Show me my lasagne recipe.", "tools_triggered": ["get_recipe"], "expected_behavior": "Shows the recipe."},
+          {"description": "Shopping list", "prompt": "Make a shopping list for this week's plan.", "tools_triggered": ["shopping_list"], "expected_behavior": "Lists ingredients."},
+          {"description": "Save a recipe", "prompt": "Save this recipe: pancakes, flour, milk, eggs.", "tools_triggered": ["save_recipe"], "expected_behavior": "Saves it and confirms."}
+        ],
+        "negative": [
+          {"description": "Medical advice", "prompt": "Which diet will cure my diabetes?"},
+          {"description": "Other people's data", "prompt": "Show me my neighbour's recipes."},
+          {"description": "Buying", "prompt": "Order these ingredients for me."}
+        ]
+      },
+      "demo_recording_url": "",
+      "commerce": false
+    },
+    "publication": {"countries": [], "release_notes": "First release."}
+  }}
+}

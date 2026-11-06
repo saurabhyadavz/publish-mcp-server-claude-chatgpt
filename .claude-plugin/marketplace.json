@@ -1,0 +1,16 @@
+{
+  "name": "ship-mcp-apps",
+  "owner": { "name": "Saurabh Yadav", "url": "https://github.com/saurabhyadavz" },
+  "metadata": {
+    "description": "Ship one MCP server to ChatGPT and Claude, end to end.",
+    "version": "0.1.0"
+  },
+  "plugins": [
+    {
+      "name": "ship-mcp-apps",
+      "source": "./",
+      "description": "Prerequisites, MCP server design, OAuth, MCP Apps cards, packaging, and the ChatGPT and Claude submissions.",
+      "category": "development"
+    }
+  ]
+}

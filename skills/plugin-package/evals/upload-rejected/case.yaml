@@ -1,0 +1,8 @@
+schema_version: "1.1"
+name: upload-rejected
+expected_outcome: |
+  plugin.json's tools_triggered values become single comma-joined strings, the dark brand colour
+  gets at least 2:1 contrast against #212121, the empty demo_recording_url is removed, and
+  mcp.json gains authorizationUrl and tokenUrl next to the CIMD client mode.
+context:
+  scaffold_script: place-files.sh

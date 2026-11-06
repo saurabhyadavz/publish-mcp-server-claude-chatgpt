@@ -1,0 +1,16 @@
+<!doctype html>
+<html><head><meta charset="utf-8"></head><body>
+<div id="root" aria-busy="true">Loading…</div>
+<script>
+(function(){
+  function post(m){window.parent.postMessage(m,"*");}
+  function render(d){var r=document.getElementById("root");r.removeAttribute("aria-busy");r.textContent=(d&&d.title)||"Nothing";}
+  if(window.openai&&window.openai.toolOutput){render(window.openai.toolOutput);}
+  else{
+    window.addEventListener("message",function(ev){var m=ev.data;
+      if(m&&m.method==="ui/notifications/tool-result")render(m.params.structuredContent);});
+    post({jsonrpc:"2.0",id:1,method:"ui/initialize",params:{protocolVersion:"2026-01-26",clientInfo:{name:"my-card",version:"1"}}});
+    post({jsonrpc:"2.0",method:"ui/notifications/initialized",params:{}});
+  }
+})();
+</script></body></html>

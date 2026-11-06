@@ -1,0 +1,65 @@
+<!doctype html>
+<!-- A minimal MCP Apps card that renders in Claude and ChatGPT. Replace render() with your own view.
+     Serve it as a ui:// resource with mime type text/html;profile=mcp-app. -->
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{--fg:#111;--muted:#666;--bg:transparent;--line:#e5e5e5;color-scheme:light dark}
+  [data-theme=dark]{--fg:#eee;--muted:#aaa;--line:#333}
+  body{margin:0;padding:4px 2px;font:14px/1.5 system-ui,sans-serif;color:var(--fg);background:var(--bg)}
+  .sk{height:12px;margin:8px 0;border-radius:6px;background:var(--line)} .empty{color:var(--muted)}
+  a.open{color:inherit}
+</style></head><body>
+<div id="root" aria-busy="true"><div class="sk" style="width:70%"></div><div class="sk"></div></div>
+<script>
+(function(){
+  var seq=1, ready=false, drawn=false;
+  function post(m){try{window.parent.postMessage(m,"*");}catch(e){}}
+  function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];});}
+  function sized(){post({jsonrpc:"2.0",method:"ui/notifications/size-changed",
+    params:{width:Math.ceil(document.documentElement.scrollWidth),height:Math.ceil(document.documentElement.getBoundingClientRect().height)}});}
+  function applyHost(ctx){if(ctx&&ctx.theme)document.documentElement.setAttribute("data-theme",ctx.theme);}
+  function open(url){if(window.openai&&window.openai.openExternal){window.openai.openExternal({href:url});return;}
+    post({jsonrpc:"2.0",id:++seq,method:"ui/open-link",params:{url:url}});}
+  document.addEventListener("click",function(e){var a=e.target.closest&&e.target.closest("a.open");if(!a)return;e.preventDefault();open(a.href);});
+
+  // --- your view: draw the tool's structuredContent ---
+  function render(d){
+    var root=document.getElementById("root"); root.removeAttribute("aria-busy"); drawn=true;
+    if(!d){root.innerHTML='<p class="empty">Nothing to show.</p>';sized();return;}
+    root.innerHTML='<p><b>'+esc(d.title||"Result")+'</b></p><p>'+esc(d.summary||"")+'</p>'+
+      (d.url?'<a class="open" href="'+esc(d.url)+'">Open it in full ↗</a>':'');
+    sized();
+  }
+
+  function fromOpenAI(){ // ChatGPT's copy of the data: an extra, never a reason to skip the start-up
+    if(!(window.openai&&window.openai.toolOutput))return false;
+    if(window.openai.theme)document.documentElement.setAttribute("data-theme",window.openai.theme);
+    render(window.openai.toolOutput); return true;
+  }
+  function initialized(){if(ready)return;ready=true;post({jsonrpc:"2.0",method:"ui/notifications/initialized",params:{}});sized();}
+
+  window.addEventListener("message",function(ev){
+    if(ev.source!==window.parent&&ev.source!==window.top&&ev.source!==window)return;
+    var m=ev.data; if(!m||m.jsonrpc!=="2.0")return;
+    if(m.id===1&&!m.method&&(m.result||m.error)){            // the host answered ui/initialize
+      if(m.result){applyHost(m.result.hostContext); if(m.result.toolResult)render(m.result.toolResult.structuredContent);}
+      initialized(); return;}
+    if(m.method==="ui/notifications/tool-result"&&m.params)render(m.params.structuredContent||m.params);
+    if(m.method==="ui/notifications/host-context-changed"&&m.params)applyHost(m.params);
+    if(m.id!=null&&(m.method==="ping"||m.method==="ui/resource-teardown"))post({jsonrpc:"2.0",id:m.id,result:{}});
+  });
+  // 1. say hello; 2. wait for the answer (above); 3. initialized
+  post({jsonrpc:"2.0",id:1,method:"ui/initialize",params:{protocolVersion:"2026-01-26",
+    appInfo:{name:"my-card",version:"1"},appCapabilities:{availableDisplayModes:["inline"]}}});
+  setTimeout(initialized,2000);                                // a host that never answers
+  if(window.ResizeObserver)new ResizeObserver(sized).observe(document.body);
+  fromOpenAI();
+  window.addEventListener("load",function(){setTimeout(fromOpenAI,300);});
+  window.addEventListener("openai:set_globals",function(){if(!drawn)fromOpenAI();});
+  var looks=0, look=setInterval(function(){                    // never stay blank
+    if(drawn){clearInterval(look);return;} fromOpenAI();
+    if(++looks>=40){clearInterval(look); if(!drawn){var r=document.getElementById("root"); r.removeAttribute("aria-busy");
+      r.innerHTML='<p class="empty">This card could not load here. Ask again.</p>'; sized();}}
+  },250);
+})();
+</script></body></html>

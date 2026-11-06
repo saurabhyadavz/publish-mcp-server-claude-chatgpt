@@ -1,0 +1,25 @@
+{
+  "name": "ship-mcp-apps",
+  "version": "0.1.0",
+  "description": "Skills that take one MCP server into both the ChatGPT plugin directory and Claude's connector directory: prerequisites, server design, OAuth, MCP Apps cards, packaging and each store's review.",
+  "author": { "name": "Saurabh Yadav", "url": "https://github.com/saurabhyadavz" },
+  "homepage": "https://github.com/saurabhyadavz/ship-mcp-apps",
+  "repository": "https://github.com/saurabhyadavz/ship-mcp-apps",
+  "license": "MIT",
+  "keywords": ["mcp", "mcp-apps", "chatgpt-apps", "claude-connector", "oauth", "agent-skills", "plugin-submission"],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Ship MCP Apps",
+    "shortDescription": "Ship an MCP app to two stores",
+    "longDescription": "Eight skills that walk you through taking one MCP server into the ChatGPT plugin directory and Claude's connector directory: what to set up first, tool design both stores accept, OAuth with CIMD and DCR, MCP Apps cards that render in both hosts, one listing source for both packages, and each portal's review step by step.",
+    "developerName": "Saurabh Yadav",
+    "category": "Developer Tools",
+    "capabilities": ["Read", "Write"],
+    "websiteURL": "https://github.com/saurabhyadavz/ship-mcp-apps",
+    "defaultPrompt": [
+      "Help me ship my MCP server to ChatGPT and Claude.",
+      "Why does my MCP Apps card time out in ChatGPT but work in Claude?",
+      "Check my ChatGPT plugin ZIP before I upload it."
+    ]
+  }
+}

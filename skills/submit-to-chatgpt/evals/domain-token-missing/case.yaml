@@ -1,0 +1,7 @@
+schema_version: "1.1"
+name: domain-token-missing
+expected_outcome: |
+  Points to Reconnect/Connect on the MCPs tab, where the Connect MCP server panel shows the
+  token further down; says to serve exactly that token as plain text at
+  https://api.myapp.dev/.well-known/openai-apps-challenge, check it with curl, then finish
+  connecting so OpenAI verifies it.

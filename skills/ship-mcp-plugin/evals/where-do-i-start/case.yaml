@@ -1,0 +1,8 @@
+schema_version: "1.1"
+name: where-do-i-start
+expected_outcome: |
+  An ordered plan covering prerequisites (identity verification, HTTPS domain, legal pages,
+  reviewer account without codes), tool design, OAuth with CIMD and DCR, cards if any, one
+  listing source for both packages, then each store's submission; it names the cross-store
+  conflicts (card domain, card start-up, tool choice) and doesn't claim the server can be
+  submitted while it only runs locally.

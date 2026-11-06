@@ -1,0 +1,12 @@
+{
+  "name": "ship-mcp-apps",
+  "interface": { "displayName": "Ship MCP Apps" },
+  "plugins": [
+    {
+      "name": "ship-mcp-apps",
+      "source": { "source": "local", "path": "./" },
+      "policy": { "installation": "AVAILABLE", "authentication": "ON_INSTALL" },
+      "category": "Developer Tools"
+    }
+  ]
+}

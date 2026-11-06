@@ -1,0 +1,8 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/mcp.schema.json",
+  "mcpServers": {"recipe-box": {
+    "type": "streamable-http",
+    "url": "https://api.recipebox.example/mcp",
+    "extensions": {"com.openai": {"auth": {"type": "oauth", "client": {"mode": "cimd"}, "baseScopes": ["recipes:read"]}}}
+  }}
+}

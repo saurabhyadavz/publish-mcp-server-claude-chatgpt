@@ -1,0 +1,8 @@
+schema_version: "1.1"
+name: card-times-out-in-chatgpt
+expected_outcome: |
+  The fixed card.html always sends ui/initialize with appInfo, sends ui/notifications/initialized
+  only after the host answers, keeps window.openai.toolOutput as an extra rather than a reason to
+  skip the handshake, and keeps looking for data so it never stays blank.
+context:
+  scaffold_script: place-files.sh
