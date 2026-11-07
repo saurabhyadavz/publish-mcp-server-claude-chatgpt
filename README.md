@@ -5,8 +5,8 @@ server into both the ChatGPT plugin directory and Claude's connector directory, 
 
 ChatGPT plugins and Claude connectors now run on the same thing: a remote MCP server, OAuth
 sign-in and MCP Apps cards. The official guides each cover one store. These skills cover both,
-including the places where doing it right for one breaks the other, from a real app that went
-through both reviews ([UPSC Grade](https://upscgrade.com)).
+including the places where doing it right for one breaks the other. Every rule was learned while
+taking a real app ([UPSC Grade](https://upscgrade.com)) to both stores.
 
 ## Quick start
 
