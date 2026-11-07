@@ -29,10 +29,11 @@ and come back with a code. Endpoint shapes and payloads: `references/endpoints.m
 ## Registering clients: support both ways
 
 - **CIMD** (ChatGPT, Claude, Claude Code): the `client_id` is an https URL on the app's own domain
-  (for example `https://claude.ai/oauth/...`, `https://chatgpt.com/oauth/.../client.json`). Fetch
-  it, check that its `client_id` equals its own URL, that its redirect URIs are on its own host
-  or loopback, and that it uses `token_endpoint_auth_method: none`. Allow only known hosts and
-  cache the document for about an hour.
+  (for example `https://claude.ai/oauth/...`, `https://chatgpt.com/oauth/.../client.json`). Check
+  its host against your list of known hosts *before* fetching, and fetch over https only, with no
+  redirects, a short timeout and a size cap. Then check that its `client_id` equals its own URL,
+  that its redirect URIs are on its own host or loopback, and that it uses
+  `token_endpoint_auth_method: none`. Cache the document for about an hour.
 - **DCR** (Cursor, Inspector, others): accept `POST /register`, rate-limit it, and allow redirect
   URIs only on known app hosts, loopback, or app schemes you trust.
 
@@ -50,7 +51,10 @@ Known return addresses: Claude uses `https://claude.ai/api/mcp/auth_callback`; C
   when a tool first needs it.
 - The consent page names the app (from its metadata), says whether it's a verified host, lists
   each permission in plain words, and has Allow and Cancel. Accept only real clicks
-  (`event.isTrusted`) so an extension or script can't allow on the user's behalf.
+  (`event.isTrusted`) so an extension or script can't allow on the user's behalf. That check runs
+  in the browser only, so also refuse to be framed (`Content-Security-Policy: frame-ancestors
+  'none'`) and require a CSRF token, tied to the session and the pending request, on the Allow
+  POST.
 
 ## The reviewer login
 
@@ -62,7 +66,11 @@ weakening real users' sign-in:
   config), never for an address that belongs to a real user, and pins the stored email so the
   token can't claim another address.
 - Show the form only on the consent page, behind a small "App reviewers: sign in with email" link.
+- Give the account a long random password used nowhere else, rate-limit the form, and give the
+  account no admin, billing or other users' data. The form is public, so treat it as a target.
 - Lift the account's usage limits and fill it with data for every test case.
+- Keep the password out of your repo, listing files and package: it goes only in each portal's
+  credentials field. If it may have leaked, change it and update both portals.
 
 ## Debugging "it sends me back to the sign-in page"
 

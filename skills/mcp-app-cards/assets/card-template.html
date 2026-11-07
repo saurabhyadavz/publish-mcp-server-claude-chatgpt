@@ -27,7 +27,7 @@
     var root=document.getElementById("root"); root.removeAttribute("aria-busy"); drawn=true;
     if(!d){root.innerHTML='<p class="empty">Nothing to show.</p>';sized();return;}
     root.innerHTML='<p><b>'+esc(d.title||"Result")+'</b></p><p>'+esc(d.summary||"")+'</p>'+
-      (d.url?'<a class="open" href="'+esc(d.url)+'">Open it in full ↗</a>':'');
+      (/^https:\/\//i.test(d.url||"")?'<a class="open" href="'+esc(d.url)+'">Open it in full ↗</a>':''); // https only: no javascript: links
     sized();
   }
 

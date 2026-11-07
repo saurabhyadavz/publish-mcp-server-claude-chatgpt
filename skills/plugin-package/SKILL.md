@@ -69,6 +69,6 @@ Claude has two listings that can point at the same server:
 - Claude: one-liner up to 200, but the directory card shows about 90 before cutting it;
   description up to 2,000.
 - Claims must match what the tools do: reviewers compare them. Count things on real data (a
-  "22,047 answers" claim that includes empty rows is wrong), and say where data comes from
+  "20,000 answers" claim that counts empty rows is wrong), and say where data comes from
   ("from the official key wherever one is published").
 - Leave affiliation disclaimers and marketing superlatives out of the one-liner; keep facts.

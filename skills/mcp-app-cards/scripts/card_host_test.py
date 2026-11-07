@@ -65,25 +65,33 @@ def find_chrome(given: str | None) -> str:
     sys.exit("Chrome not found: pass --chrome /path/to/chrome")
 
 
+def js(data: dict) -> str:
+    """The data as a JavaScript literal that is safe inside <script> (no "</script>" break-out)."""
+    return json.dumps(data).replace("<", "\\u003c")
+
+
 def run(chrome: str, card: Path, data: dict, mode: str) -> dict:
     body = card.read_text(encoding="utf-8")
     inject = ""
     if mode == "chatgpt":
-        inject = "<script>window.openai={toolOutput:" + json.dumps(data) + ",theme:'light'};</script>"
+        inject = "<script>window.openai={toolOutput:" + js(data) + ",theme:'light'};</script>"
     elif mode == "late":
         inject = ("<script>window.openai={theme:'light'};setTimeout(function(){window.openai.toolOutput="
-                  + json.dumps(data) + ";window.dispatchEvent(new CustomEvent('openai:set_globals',"
+                  + js(data) + ";window.dispatchEvent(new CustomEvent('openai:set_globals',"
                   "{detail:{globals:{toolOutput:window.openai.toolOutput}}}));},1500);</script>")
     if inject:
         body = re.sub(r"<head[^>]*>", lambda m: m.group(0) + inject, body, count=1) if "<head" in body else inject + body
-    page = (HOST.replace("__CARD__", html.escape(body, quote=True)).replace("__DATA__", json.dumps(data))
+    page = (HOST.replace("__CARD__", html.escape(body, quote=True)).replace("__DATA__", js(data))
             .replace("__SEND_RESULT__", "false" if mode == "late" else "true"))
     with tempfile.TemporaryDirectory() as d:
         host = Path(d) / "host.html"
         host.write_text(page, encoding="utf-8")
-        out = subprocess.run([chrome, "--headless=new", "--disable-gpu", "--no-first-run", f"--user-data-dir={d}/u",
-                              "--virtual-time-budget=7000", "--dump-dom", host.as_uri()],
-                             capture_output=True, text=True, timeout=90).stdout
+        try:
+            out = subprocess.run([chrome, "--headless=new", "--disable-gpu", "--no-first-run", f"--user-data-dir={d}/u",
+                                  "--virtual-time-budget=7000", "--dump-dom", host.as_uri()],
+                                 capture_output=True, text=True, timeout=90).stdout
+        except subprocess.TimeoutExpired:
+            return {"error": "Chrome timed out (run again; if it repeats, the card may loop forever)"}
     got = re.search(r'<pre id="out">(.*?)</pre>', out, re.S)
     if not got or got.group(1) == "pending":
         return {"error": "no result from Chrome"}

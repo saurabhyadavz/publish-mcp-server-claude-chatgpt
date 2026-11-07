@@ -55,8 +55,9 @@ given separately.
   a feature, check the connector actually exposes it, not just your website.
 - Numbers counted on real data. Wording like "from the official source wherever one is published"
   when some data is unofficial.
-- After submitting, keep the generated portal text in your repo so a later edit starts from what
-  was submitted.
+- After submitting, keep the generated portal text somewhere private (a private repo or your
+  notes) so a later edit starts from what was submitted. It holds the reviewer's email, so keep
+  it out of a public repo, and the password never goes in it.
 
 ## 3. The optional plugin bundle
 

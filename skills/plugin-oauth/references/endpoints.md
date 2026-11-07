@@ -60,5 +60,7 @@ server uses for its metadata, and test that they match.
 - A token minted for a different `resource` is refused.
 - A refresh token used twice outside the grace window revokes the chain.
 - The reviewer password sign-in is refused for any account but the allowlisted id, and for an
-  address on the owner/admin list.
-- The consent page ignores synthetic clicks.
+  address on the owner/admin list, and repeated wrong passwords are slowed or blocked.
+- The consent page ignores synthetic clicks, won't load in a frame, and refuses an Allow POST
+  without the session's CSRF token.
+- A CIMD `client_id` on an unknown host is refused without being fetched.

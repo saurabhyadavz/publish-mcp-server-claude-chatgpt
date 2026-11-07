@@ -31,6 +31,13 @@ def contrast(a: str, b: str) -> float:
     return (hi + 0.05) / (lo + 0.05)
 
 
+def rel(name: str) -> str:
+    """A package path without its leading "./" (a prefix, not a set of characters)."""
+    while name.startswith("./"):
+        name = name[2:]
+    return name
+
+
 class Package:
     def __init__(self, path: Path):
         self.path = path
@@ -42,10 +49,15 @@ class Package:
         return [str(p.relative_to(self.path)) for p in self.path.rglob("*") if p.is_file()]
 
     def read(self, name: str) -> str | None:
-        name = name.lstrip("./")
+        name = rel(name)
         try:
-            return (self.zip.read(name).decode("utf-8") if self.zip else (self.path / name).read_text(encoding="utf-8"))
-        except (KeyError, FileNotFoundError):
+            if self.zip:
+                return self.zip.read(name).decode("utf-8")
+            path = (self.path / name).resolve()
+            if not path.is_relative_to(self.path.resolve()):   # a path that climbs out of the package
+                return None
+            return path.read_text(encoding="utf-8")
+        except (KeyError, FileNotFoundError, IsADirectoryError, UnicodeDecodeError):
             return None
 
 
@@ -80,12 +92,13 @@ def check(pkg: Package, server: str | None) -> list[str]:
         if c and re.fullmatch(r"#[0-9A-Fa-f]{6}", c) and contrast(c, ground) < 2:
             bad.append(f"interface.{k} {c} has {contrast(c, ground):.2f}:1 against {ground}; needs at least 2:1")
     for k in ("composerIcon", "composerIconDark", "logo"):
-        if face.get(k) and face[k].lstrip("./") not in names:
+        if face.get(k) and rel(face[k]) not in names:
             bad.append(f"interface.{k} points at {face[k]}, which isn't in the package")
     skill = oa.get("onboardingSkill")
     if skill:
         body = pkg.read(skill)
-        folder = skill.lstrip("./").split("/")[-2] if "/" in skill else ""
+        parts = rel(skill).split("/")
+        folder = parts[-2] if len(parts) > 1 else ""
         if body is None:
             bad.append(f"onboardingSkill {skill} isn't in the package")
         elif not re.match(rf"---\s*\nname:\s*{re.escape(folder)}\s*\ndescription:", body):
