@@ -1,6 +1,6 @@
 interface:
-  display_name: "Ship an MCP plugin"
+  display_name: "Publish an MCP server"
   short_description: "Take one MCP server to ChatGPT and Claude"
-  default_prompt: "Help me ship my MCP server to ChatGPT and Claude."
+  default_prompt: "Help me publish my MCP server to ChatGPT and Claude."
 policy:
   allow_implicit_invocation: true

@@ -1,9 +1,9 @@
 {
-  "name": "ship-mcp-apps",
-  "interface": { "displayName": "Ship MCP Apps" },
+  "name": "publish-mcp-server",
+  "interface": { "displayName": "Publish MCP Server" },
   "plugins": [
     {
-      "name": "ship-mcp-apps",
+      "name": "publish-mcp-server",
       "source": { "source": "local", "path": "./" },
       "policy": { "installation": "AVAILABLE", "authentication": "ON_INSTALL" },
       "category": "Developer Tools"

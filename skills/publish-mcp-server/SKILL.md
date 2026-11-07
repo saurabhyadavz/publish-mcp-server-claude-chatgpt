@@ -1,5 +1,5 @@
 ---
-name: ship-mcp-plugin
+name: publish-mcp-server
 description: Start here to take one MCP server into both the ChatGPT plugin directory (platform.openai.com/plugins) and Claude's connector directory (claude.ai/directory) end to end. Use whenever someone wants to publish, list, submit or "ship" an MCP server, ChatGPT app, ChatGPT plugin, Claude connector or MCP Apps UI, asks what is left before submitting, or is stuck at any step from first setup to a reviewer's findings, even if they only name one of the two stores.
 license: MIT
 metadata:
@@ -7,7 +7,7 @@ metadata:
   version: "0.1.0"
 ---
 
-# Ship one MCP server to ChatGPT and Claude
+# Publish one MCP server to ChatGPT and Claude
 
 Both stores now run on the same thing: a remote MCP server over Streamable HTTP, OAuth sign-in,
 and (optionally) MCP Apps cards. So one server can be listed in both. What differs is a handful

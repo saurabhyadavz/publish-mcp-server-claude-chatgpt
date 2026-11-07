@@ -151,7 +151,7 @@ def check(pkg: Package, server: str | None) -> list[str]:
             if server:
                 url = server.rstrip("/") + "/.well-known/oauth-authorization-server"
                 try:   # a named agent: some bot protection refuses Python's default one
-                    req = urllib.request.Request(url, headers={"User-Agent": "ship-mcp-apps-checker/0.1", "Accept": "application/json"})
+                    req = urllib.request.Request(url, headers={"User-Agent": "publish-mcp-server-checker/0.1", "Accept": "application/json"})
                     meta = json.load(urllib.request.urlopen(req, timeout=20))
                 except Exception as exc:
                     bad.append(f"could not read {url}: {exc}")

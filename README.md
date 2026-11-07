@@ -1,4 +1,4 @@
-# ship-mcp-apps
+# publish-mcp-server-claude-chatgpt
 
 **Agent skills for Claude Code and Codex (and any agent that reads `SKILL.md`) that take one MCP
 server into both the ChatGPT plugin directory and Claude's connector directory, end to end.**
@@ -10,7 +10,7 @@ through both reviews ([UPSC Grade](https://upscgrade.com)).
 
 ## Quick start
 
-Ask your agent: **"Help me ship my MCP server to ChatGPT and Claude."** The `ship-mcp-plugin`
+Ask your agent: **"Help me publish my MCP server to ChatGPT and Claude."** The `publish-mcp-server`
 skill finds where you are and runs the rest in order.
 
 ## Install
@@ -18,23 +18,23 @@ skill finds where you are and runs the rest in order.
 <details open><summary><b>Claude Code</b></summary>
 
 ```
-/plugin marketplace add saurabhyadavz/ship-mcp-apps
-/plugin install ship-mcp-apps@ship-mcp-apps
+/plugin marketplace add saurabhyadavz/publish-mcp-server-claude-chatgpt
+/plugin install publish-mcp-server@publish-mcp-server
 ```
 </details>
 
 <details><summary><b>Codex</b></summary>
 
 ```
-codex plugin marketplace add saurabhyadavz/ship-mcp-apps
+codex plugin marketplace add saurabhyadavz/publish-mcp-server-claude-chatgpt
 ```
-then `/plugins` and install **ship-mcp-apps**.
+then `/plugins` and install **publish-mcp-server**.
 </details>
 
 <details><summary><b>Any agent (skills CLI)</b></summary>
 
 ```
-npx skills add saurabhyadavz/ship-mcp-apps -a claude-code    # or -a codex
+npx skills add saurabhyadavz/publish-mcp-server-claude-chatgpt -a claude-code    # or -a codex
 ```
 </details>
 
@@ -48,7 +48,7 @@ Copy the folders under `skills/` into `~/.claude/skills/` (Claude Code) or `~/.a
 
 | Skill | What it does |
 |---|---|
-| `ship-mcp-plugin` | Start here: finds your stage, runs the others, lists the cross-store conflicts |
+| `publish-mcp-server` | Start here: finds your stage, runs the others, lists the cross-store conflicts |
 | `plugin-prerequisites` | Accounts, identity verification, domain, legal pages, a mailbox that receives mail, a reviewer login with no codes |
 | `mcp-server-for-plugins` | Tool names, titles, all four hints, output schemas, size budgets, and server instructions that make ChatGPT call your tool |
 | `plugin-oauth` | OAuth 2.1 + PKCE, CIMD and DCR, `iss`, refresh rotation, the consent page, a safe reviewer password login, and "it sends me back to sign-in" fixes |

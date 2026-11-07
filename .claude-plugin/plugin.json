@@ -1,10 +1,10 @@
 {
-  "name": "ship-mcp-apps",
+  "name": "publish-mcp-server",
   "version": "0.1.0",
   "description": "Skills that take one MCP server into both the ChatGPT plugin directory and Claude's connector directory: prerequisites, server design, OAuth, MCP Apps cards, packaging and each store's review.",
   "author": { "name": "Saurabh Yadav", "url": "https://github.com/saurabhyadavz" },
-  "homepage": "https://github.com/saurabhyadavz/ship-mcp-apps",
-  "repository": "https://github.com/saurabhyadavz/ship-mcp-apps",
+  "homepage": "https://github.com/saurabhyadavz/publish-mcp-server-claude-chatgpt",
+  "repository": "https://github.com/saurabhyadavz/publish-mcp-server-claude-chatgpt",
   "license": "MIT",
   "keywords": ["mcp", "mcp-apps", "chatgpt-apps", "claude-connector", "oauth", "agent-skills", "plugin-submission"]
 }
