@@ -3,3 +3,4 @@ __pycache__/
 .DS_Store
 *-workspace/
 evals/results/
+skills/*/evals/results/

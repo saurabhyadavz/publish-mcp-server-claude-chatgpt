@@ -1,0 +1,11 @@
+schema_version: "1.1"
+name: chatgpt-package-from-scratch
+expected_outcome: |
+  chatgpt/ holds plugin.json (agent-plugins.org schema, extensions.com.openai with
+  interface, review and publication), mcp.json (streamable-http server URL, OAuth with
+  cimd plus authorizationUrl and tokenUrl) and an onboarding skill. Five positive test
+  cases whose tools_triggered are comma-joined strings of real tool names, three negative
+  ones, developerName Asha Rao, a dark brand colour lighter than #0F3D2E, and no empty
+  demo link; the reply says the demo video is still needed.
+context:
+  scaffold_script: place-files.sh

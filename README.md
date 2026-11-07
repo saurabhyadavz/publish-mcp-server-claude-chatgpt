@@ -73,7 +73,27 @@ skills/<name>/scripts/          tools the skill runs
 .claude-plugin/                 Claude Code plugin + marketplace
 .codex-plugin/  .agents/        Codex plugin + marketplace
 scripts/validate_skills.py      checks every skill's front matter and the manifests (CI runs it)
+evals/<case>/                   test cases: a prompt, input files, and graders
 ```
+
+## Tests
+
+`evals/` holds five cases drawn from shipping a real app:
+- a card that times out in ChatGPT;
+- an upload OpenAI rejects;
+- a package written from scratch;
+- a missing domain token;
+- "where do I start".
+
+Claude Code runs every case with and without the skills and reports the difference:
+
+```
+claude plugin eval . --scaffold --allow-tools Write Edit Bash
+```
+
+These are real model runs on your own account, so they cost money: roughly $5 to $10 for the
+full set at three runs per case, with the default judge. Add `--runs 1` for a quick check.
+Latest results, with and without the skills: [evals/RESULTS.md](evals/RESULTS.md).
 
 ## Contributing
 

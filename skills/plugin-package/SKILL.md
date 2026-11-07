@@ -34,8 +34,9 @@ and that bit us, all caught by `scripts/check_chatgpt_package.py`:
   ("Declare both authorizationUrl and tokenUrl for OAuth"), even though discovery gives them.
 - **Brand colours need contrast**: dark vs `#212121` at least 2:1 ("Dark brand color must have at
   least 2:1 contrast against #212121"); check the light one against white too.
-- An empty `demo_recording_url` is better left out until you have the link; the video can also be
-  pasted in the portal's Supporting content step.
+- **The demo video is required to submit for review.** Leave an empty `demo_recording_url` out
+  (the upload rejects it), and tell the user they still need the video link before submitting:
+  in `plugin.json`, or pasted in the portal's Supporting content step.
 - Exactly five positive and three negative test cases for submission; `developerName` equal to
   your verified identity; `displayName` and `shortDescription` at most 30 characters; up to three
   `defaultPrompt`s of at most 128.

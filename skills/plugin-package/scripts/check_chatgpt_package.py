@@ -57,7 +57,10 @@ def check(pkg: Package, server: str | None) -> list[str]:
     raw = pkg.read("plugin.json")
     if raw is None:
         return bad + ["no plugin.json"]
-    manifest = json.loads(raw)
+    try:
+        manifest = json.loads(raw)
+    except json.JSONDecodeError as exc:   # comments or trailing commas: the upload rejects them too
+        return bad + [f"plugin.json is not valid JSON ({exc})"]
     oa = manifest.get("extensions", {}).get("com.openai", {})
     face = oa.get("interface", {})
     for k, n in LIMITS.items():
@@ -116,7 +119,10 @@ def check(pkg: Package, server: str | None) -> list[str]:
     raw_mcp = pkg.read("mcp.json")
     if raw_mcp is None:
         return bad + ["no mcp.json"]
-    servers = json.loads(raw_mcp).get("mcpServers", {})
+    try:
+        servers = json.loads(raw_mcp).get("mcpServers", {})
+    except json.JSONDecodeError as exc:
+        return bad + [f"mcp.json is not valid JSON ({exc})"]
     if not servers:
         bad.append("mcp.json has no mcpServers")
     for name, s in servers.items():
